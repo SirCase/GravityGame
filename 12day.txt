@@ -1,0 +1,16 @@
+1 - Pyayer falls in a single graviational frame, player can not fall through platform
+2 - Player has basic movement - move, jump, etc
+3 - Add hazard functionality (Spikes, 
+4 - Start basic level design, add overlay
+5 - Add up-down flippble fuctionality
+6 - Make an up-down flippable level design
+7 - Add left-up gravity functionality
+8 - Add right-down gravity functionality and begin on perpendicular gravity level
+9 - Finish perpendicular gravity level
+10 - Add map switching mechanic, make more levels
+11 - Debugging and more levels
+12 - Finishing touches and trophies
+
+Potential Additional Topics:
+Multiplayer split screen
+Boss fight?
