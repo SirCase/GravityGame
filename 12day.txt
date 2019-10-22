@@ -1,6 +1,14 @@
+Discussion Issues:
+(1)Flipping room while keeping player and gravity direction constantly "down" vs (2)flipping player and gravity direction while keeping room constant
+	-Ideally, would be (1), but if it is too complicated, then do (2)
+	-For up-down rotation, delta y from the midline becomes negative delta y
+	-For left right rotation, delta x from the midline becomes negative delta x
+	-For 90 degree rotation, delta y becomes negative delta x and delta x becomes delta y or vice versa
+
+Programming Schedule:
 1 - Pyayer falls in a single graviational frame, player can not fall through platform
 2 - Player has basic movement - move, jump, etc
-3 - Add hazard functionality (Spikes, 
+3 - Add hazard functionality (Spikes, lava, energy ball)
 4 - Start basic level design, add overlay
 5 - Add up-down flippble fuctionality
 6 - Make an up-down flippable level design
