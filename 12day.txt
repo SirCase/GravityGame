@@ -6,18 +6,18 @@ Discussion Issues:
 	-For 90 degree rotation, delta y becomes negative delta x and delta x becomes delta y or vice versa
 
 Programming Schedule:
-1 - Pyayer falls in a single graviational frame, player can not fall through platform
-2 - Player has basic movement - move, jump, etc
-3 - Add hazard functionality (Spikes, lava, energy ball)
-4 - Start basic level design, add overlay
-5 - Add up-down flippble fuctionality
-6 - Make an up-down flippable level design
-7 - Add left-up gravity functionality
-8 - Add right-down gravity functionality and begin on perpendicular gravity level
-9 - Finish perpendicular gravity level
-10 - Add map switching mechanic, make more levels
-11 - Debugging and more levels
-12 - Finishing touches and trophies
+1 - Pyayer falls with an acceleration under gravity in a single graviational frame, create a platform that the player collides with and can stand on (handleGrav(p) in tech spec)
+2 - Player has basic movement - move, jump, etc (controls in design document)
+3 - Add hazard and damage functionality (enemy interaction in design document)
+4 - Start basic level design, add overlay (sample level design and overlay in design document)
+5 - Add up-down flippble fuctionality (Gravity in design document)
+6 - Make an up-down flippable level design (sample level design in design document)
+7 - Add left-up gravity functionality (discussion issues in 12day)
+8 - Add right-down gravity functionality and begin on perpendicular gravity level (discussion issues in 12day and sample level design in design document)
+9 - Finish perpendicular gravity level (sample level design in design document)
+10 - Add map switching mechanic, make more levels (exit in tech spec)
+11 - Debugging and more levels (sample level design in design document)
+12 - Finishing touches and trophies (secondary objective in design document)
 
 Potential Additional Topics:
 Multiplayer split screen
