@@ -6,7 +6,7 @@ Discussion Issues:
 	-For 90 degree rotation, delta y becomes negative delta x and delta x becomes delta y or vice versa
 
 Programming Schedule:
-1 - Pyayer falls with an acceleration under gravity in a single graviational frame, create a platform that the player collides with and can stand on (handleGrav(p) in tech spec)
+1 - Player falls with an acceleration under gravity in a single graviational frame, create a platform that the player collides with and can stand on (handleGrav(p) in tech spec)
 2 - Player has basic movement - move, jump, etc (controls in design document)
 3 - Add hazard and damage functionality (enemy interaction in design document)
 4 - Start basic level design, add overlay (sample level design and overlay in design document)
