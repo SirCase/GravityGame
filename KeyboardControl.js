@@ -11,7 +11,6 @@ var CONTROLS = {
     down : false
   },
 
-  }
 
 };
 
