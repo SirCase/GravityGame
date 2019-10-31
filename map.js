@@ -31,5 +31,4 @@ var background = new Image();
 background.src = "Sprites/background.gif";
 
 background.onload = function(){
-    ctx.drawImage(background,0,0);
-}
+    ctx.drawImage(background,600,300);
