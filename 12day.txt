@@ -31,3 +31,6 @@ After Sprint 0
 -Day 3 features do not work properly
 	-Enemy does not actually kill player
 -No sprites are implemented, including background
+-Most functions are functions copy pasted from the internet with a lot of unnecssary complicaed stuff
+
+SOLUTION: Start from scratch
