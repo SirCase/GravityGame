@@ -22,3 +22,12 @@ Programming Schedule:
 Potential Additional Topics:
 Multiplayer split screen
 Boss fight?
+
+
+After Sprint 0
+-Day 1 features do not exist
+-Day 2 features do not work properly
+	-Jump is teleportation
+-Day 3 features do not work properly
+	-Enemy does not actually kill player
+-No sprites are implemented, including background
