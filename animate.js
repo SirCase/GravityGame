@@ -5,34 +5,34 @@ function renderPlayer(context) {
     handlePlayerMovement();
   }
   var p1 = new Image();
-  if (P1.renderDirection == "L")
-    p1.src = '/Sprites/playerL.png';
-    if (P1.direction == "L"){
-      if (P1.currentFrame < P1.totalFrames * P1.frameDuration  || P1.currentFrame < P1.runCutoff){
-        P1.currentFrame++;
-      }
-      else{
-        P1.currentFrame = P1.runCutoff;
-      }
+    p1.src = '/Sprites/player' + P1.renderDirection + '.png';
+  if (P1.direction == "L" || P1.direction == "R"){
+    if (P1.currentFrame < P1.totalFrames * P1.frameDuration  && P1.currentFrame >= P1.runCutoff * P1.frameDuration){
+      P1.currentFrame++;
     }
     else{
-
+      P1.currentFrame = P1.runCutoff * P1.frameDuration;
     }
-  else{
-    p1.src = '/Sprites/playerR.png';
   }
-
-  context.drawImage(p1,P1.width / P1.totalFrames * Math.floor(P1.currentFrame/P1.frameDuration),0,P1.width / P1.totalFrames, P1.height, P1.x-P1.width/2, P1.y-P1.height/2, P1.width, P1.height);
+  else{
+    if (P1.currentFrame < P1.runCutoff * P1.frameDuration-1){
+      P1.currentFrame++;
+    }
+    else{
+      P1.currentFrame = 0;
+    }
+  }
+  context.drawImage(p1,P1.sheetWidth / P1.totalFrames * Math.floor(P1.currentFrame/P1.frameDuration),0,P1.sheetWidth / P1.totalFrames, P1.sheetHeight, P1.x-(P1.width/2), P1.y-(P1.height/2), P1.width, P1.height);
 }
 function initializePlayer(){
-  P1.x = (GAME.canvas.width-P1.width)/2;
-  P1.y = (GAME.canvas.height-P1.height)/2;
-  P1.xvel = 0;
+  P1.x = GAME.canvas.width/2;
+  P1.y = GAME.canvas.height/2;
+  P1.xvel = 5;
   P1.xacc = 0;
   P1.yvel = 0;
   P1.yacc = 0;
   P1.direction = "0";
-  P1.renderDirection = "L";
+  P1.renderDirection = "R";
 }
 function handlePlayerMovement() {
   if (P1.direction == "L"){
@@ -41,23 +41,20 @@ function handlePlayerMovement() {
   else if (P1.direction == "R"){
     P1.x += P1.xvel;
   }
-  if (P1.y + P1.height > GAME.canvas.height){
-    P1.yacc = 0;
-    P1.yvel = 0;
-    P1.canJump = true;
-  }
-  else{
-    P1.yacc = GAME.gravity;
-    P1.canJump = true;
-  }
-  P1.yvel+=P1.yacc;
+  P1.yacc = GAME.gravity;
+  P1.canJump = false;
+  P1.y += P1.yvel;
+  P1.yvel += P1.yacc;
   if (P1.x > GAME.canvas.width - P1.width/2){
       P1.x = GAME.canvas.width - P1.width/2;
-      P1.xvel = 0;
   }
   if (P1.x - P1.width/2 <0){
     P1.x = P1.width/2;
-    P1.xvel = 0;
+  }
+  if (P1.y + P1.height/2 >= GAME.canvas.height){
+    P1.y = GAME.canvas.height-P1.height/2;
+    P1.yvel = 0;
+    P1.canJump = true;
   }
 }
 function renderBackground(context){
@@ -81,7 +78,7 @@ function runGame() {
     context.font = "30px Arial";
     context.fillStyle = "red";
     context.textAlign = "center";
-    context.fillText("x: " + P1.x + " y: " + P1.y, GAME.canvas.width/2, 200);
+    context.fillText("x: " + P1.x + " y: " + P1.y + " xvel: " + P1.xvel + " yvel: " + P1.yvel + " cj: " + P1.canJump, GAME.canvas.width/2, 200);
   }
   else{
     renderBackground(context);

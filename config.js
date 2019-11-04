@@ -1,10 +1,11 @@
 var GAME = {
   canvas : {
-    width : 940,
-    height : 940,
-    gravity : 5
+    width : 934,
+    height : 934,
   },
-  started : true
+  gravity : 1,
+  started : true,
+  jumpPressed : false
 };
 
 var P1 = {
@@ -15,6 +16,7 @@ var P1 = {
   yvel : 0,
   yacc : 0,
   xvel : 5,
+  jumpStrength : 20,
   direction : "R",
   renderDirection : "R",
   canJump : false,
@@ -22,8 +24,8 @@ var P1 = {
   totalFrames : 69,
   runCutoff: 20,
   frameDuration : 3,
-  width : 5016,
-  height : 74
+  sheetWidth : 5106,
+  sheetHeight : 74
 };
 var BACKGROUND = {
   currentFrame : 0,

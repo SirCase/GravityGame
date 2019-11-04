@@ -9,8 +9,10 @@ document.addEventListener('keydown', function(event) {
       P1.renderDirection = "R";
       break;
     case "w":
+      GAME.jumpPressed = true;
       if (P1.canJump){
-        P1.yvel = 5;
+        P1.yvel = -P1.jumpStrength;
+        P1.canJump = false;
       }
       break;
     case "r":
@@ -26,8 +28,8 @@ document.addEventListener('keydown', function(event) {
 
 document.addEventListener('keyup', function(event) {
   switch (event.key) {
-    case " ":
-      P1.yvel = 5;
+    case "w":
+      GAME.jumpPressed = true;
       break;
     case "a":
       P1.direction = "0";
