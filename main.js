@@ -1,5 +1,10 @@
-// function Start() {
-//
-//   // Initialize Character
-//   InitializeCharacter();
-// }
+
+// Javascript Canvas Intro!
+
+/**
+ *  This is called once after the HTML of the page loads
+ *
+ */
+function Start() {
+  initializePlayer();
+}

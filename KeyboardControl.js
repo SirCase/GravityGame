@@ -1,52 +1,41 @@
-// /**
-//  *  Keydown event listener runs every time ANY key is pressed!
-//  *
-//  */
-//
-// var CONTROLS = {
-//   player : {
-//     left : false,
-//     right : false,
-//     up : false,
-//     down : false
-//   },
-//
-//
-// };
-//
-// document.addEventListener('keydown', function(event) {
-//   switch (event.key) {
-//     case "ArrowUp":
-//       CONTROLS.player.up = true;
-//       break;
-//     case "ArrowDown":
-//       CONTROLS.player.down = true;
-//       break;
-//     case "ArrowLeft":
-//       CONTROLS.player.left = true;
-//       break;
-//     case "ArrowRight":
-//       CONTROLS.player.right = true;
-//       break;
-//     case " ":
-//   }
-// });
-//
-//
-// document.addEventListener('keyup', function(event) {
-//   switch (event.key) {
-//     case "ArrowUp":
-//       CONTROLS.player.up = false;
-//       break;
-//     case "ArrowDown":
-//       CONTROLS.player.down = false;
-//       break;
-//     case "ArrowLeft":
-//       CONTROLS.player.left = false;
-//       break;
-//     case "ArrowRight":
-//       CONTROLS.player.right = false;
-//       break;
-//     case " ":
-//   }
-// });
+document.addEventListener('keydown', function(event) {
+  switch (event.key) {
+    case "a":
+      P1.direction = "L";
+      P1.renderDirection = "L";
+      break;
+    case "d":
+      P1.direction = "R";
+      P1.renderDirection = "R";
+      break;
+    case "w":
+      if (P1.canJump){
+        P1.yvel = 5;
+      }
+      break;
+    case "r":
+      if (!GAME.started){
+        initializePlayer();
+        GAME.started = true;
+      }
+      break;
+    default:
+      break;
+  }
+});
+
+document.addEventListener('keyup', function(event) {
+  switch (event.key) {
+    case " ":
+      P1.yvel = 5;
+      break;
+    case "a":
+      P1.direction = "0";
+      break;
+    case "d":
+      P1.direction = "0";
+      break;
+    default:
+      break;
+  }
+});

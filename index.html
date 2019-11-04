@@ -1,128 +1,15 @@
-
-<!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-}
+  <title>Gra^ity Game</title>
+  <head>
+  <script type="text/javascript" src="config.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+  <head>
+  <body onload="Start()">
+    <canvas id="mainCanvas" width="940" height="940" style="border:1px solid black;">
+    </canvas>
+  </body>
 
-</style>
-</head>
-<body onload="startGame()">
-      <!-- <canvas id="canvas" width="600" height="300" style="border:1px solid black;">
-      </canvas> -->
-    </body>
-
-<script>
-var WIDTH = 600;
-var HEIGHT = 300;
-var myGamePiece;
-var obstacle;
-var components; //array of components
-
-
-
-function startGame() {
-    myGameArea.start();
-    myGamePiece = new component(30, 30, "red", 10, 120,true);
-    obstacle = new component(40, 40, "blue", 100, HEIGHT-40,false);
-
-    components = [myGamePiece, obstacle];
-}
-
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = WIDTH;
-        this.canvas.height = HEIGHT;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
-        window.addEventListener('keydown', function (e) {
-            myGameArea.key = e.keyCode;
-        })
-        window.addEventListener('keyup', function (e) {
-            myGameArea.key = false;
-        })
-    },
-    clear : function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
-
-function doOverlap(a, b) {
-    if (a.x > b.x+b.width || b.x > a.x+a.width) {
-        return false;
-    }
-
-    if (a.y > b.y+b.height || b.y > a.y+a.height) {
-        return false;
-    }
-    return true;
-}
-
-
-function component(width, height, color, x, y, hasGravity) {
-    this.gamearea = myGameArea;
-    this.width = width;
-    this.height = height;
-    this.speedX = 0;
-    this.speedY = 0;
-    this.x = x;
-    this.y = y;
-    this.hasGravity = hasGravity;
-    this.update = function() {
-        ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    this.newPos = function() {
-        let tempX = this.x + this.speedX;
-        let tempY = this.y + this.speedY;
-
-        if(this.hasGravity && this.y < this.gamearea.canvas.height - this.height) {
-            tempY += 2;
-        }
-
-        let canMove = true;
-
-        components.forEach((c) => {
-            if (doOverlap(c, this) && c != myGamePiece) {
-                canMove = false;
-            }
-        });
-
-        if (canMove) {
-            this.x = tempX;
-            this.y = tempY;
-        }
-        else {
-            // this.startGame();
-        }
-
-    }
-	this.jump = function() {
-        if (this.y == this.gamearea.canvas.height - this.height) {
-            this.y -= 100;
-        }
-	}
-}
-
-
-function updateGameArea() {
-    myGameArea.clear();
-    myGamePiece.speedX = 0;
-    myGamePiece.speedY = 0;
-    if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -1; }
-    if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 1; }
-    if (myGameArea.key && myGameArea.key == 38) {myGamePiece.jump(); }
-    components.forEach((c)=>{c.newPos(); c.update();});
-
-}
-</script>
-
-</body>
+  <!-- Load the keyboard control AFTER the page has loaded -->
+  <script type="text/javascript" src="keyboardControl.js" ></script>
+  <script type="text/javascript" src="animate.js" ></script>
 </html>
