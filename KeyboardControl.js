@@ -11,8 +11,7 @@ document.addEventListener('keydown', function(event) {
     case "w":
       P1.jumpPressed = true;
       if (P1.canJump){
-        P1.yvel = -P1.jumpStrength;
-        P1.canJump = false;
+        P1.yvel = 0;
         P1.jumping = true;
       }
       break;
@@ -22,11 +21,16 @@ document.addEventListener('keydown', function(event) {
         GAME.started = true;
       }
       break;
-    case "o":
-      BACKGROUND.direction = 0;
-      break;
-    case "p":
-      BACKGROUND.direction = 1;
+    case " ":
+      if(!GAME.flippingGravity && BACKGROUND.direction == 0){
+          BACKGROUND.direction = 2;
+      }
+      else if (!GAME.flippingGravity){
+        BACKGROUND.direction = 0;
+      }
+      P1.flippingGravity = true;
+      P1.y = -P1.y;
+      P1.x = -P1.x;
       break;
     default:
       break;
@@ -43,6 +47,9 @@ document.addEventListener('keyup', function(event) {
       break;
     case "d":
       P1.directionR = false;
+      break;
+    case " ":
+      GAME.flippingGravitys = false;
       break;
     default:
       break;

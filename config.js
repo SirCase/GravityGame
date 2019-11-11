@@ -3,7 +3,8 @@ var GAME = {
     width : 934,
     height : 934,
   },
-  gravity : 0.6,
+  gravity : 0.5,
+  flippingGravity : false,
   started : true,
   level : 1,
   platforms : []

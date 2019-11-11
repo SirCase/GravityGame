@@ -35,6 +35,11 @@ function renderPlayer(context) {
   else /*if (P1.renderDirection == "R")*/{
     context.drawImage(P1.imageR, P1.sheetWidth / P1.totalFrames * Math.floor(P1.currentFrame/P1.frameDuration),0,P1.sheetWidth / P1.totalFrames, P1.sheetHeight, P1.x-(P1.width/2), P1.y-(P1.height/2), P1.width, P1.height);
   }
+  context.beginPath();
+  context.lineWidth = "1";
+  context.strokeStyle = "red";
+  context.rect(P1.x-P1.hitboxX/2, P1.y-P1.height/2, P1.hitboxX, P1.height);
+  context.stroke();
 }
 /*
 function drawRotatedPlayer(context, image, sx, sy, dx, dy, x, y, width, height, angle) {
@@ -47,21 +52,22 @@ context.save();
 function checkCollisions(){
   for (var i = 0; i < GAME.platforms.length; i++){
     var p = GAME.platforms[i];
-    if ((P1.x-P1.hitboxX/2 < p.x+p.width/2) &&
+    if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&
        (P1.x + P1.hitboxX/2 > p.x-p.width/2) &&
        (P1.y-P1.height/2 < p.y+p.height/2) &&
        (P1.y + P1.height/2> p.y-p.height/2)){
-         if (!P1.jumpPressed){
+         if(P1.y + P1.height/2> p.y-p.height/2){
            P1.yvel = 0;
-         }
-         P1.canJump = true;
-         P1.jumping = false;
+           P1.y = p.y-p.height/2 - P1.height/2;
+           P1.canJump = true;
+           P1.jumping = false;
+       }
     }
   }
 }
 function initializePlayer(){
-  P1.x = 0;
-  P1.y = 0;
+  P1.x = -100;
+  P1.y = 200;
   P1.xvel = 3;
   P1.xacc = 0;
   P1.yvel = 0;
@@ -82,6 +88,9 @@ function handlePlayerMovement() {
   P1.canJump = false;
   P1.yvel += P1.yacc;
   checkCollisions();
+  if (P1.jumpPressed && P1.canJump){
+    P1.yvel = -P1.jumpStrength;
+  }
   P1.y += P1.yvel;
   if (P1.x > GAME.canvas.width/2 - P1.hitboxX/2){
       P1.x = GAME.canvas.width/2 - P1.hitboxX/2;
@@ -89,32 +98,37 @@ function handlePlayerMovement() {
   if (P1.x - P1.hitboxX/2 <-GAME.canvas.width/2){
     P1.x = -GAME.canvas.width/2 + P1.hitboxX/2;
   }
-  if (P1.y >= (GAME.canvas.height - P1.height)/2){
-    P1.y = (GAME.canvas.height-P1.height)/2;
-    P1.yvel = 0;
-    P1.canJump = true;
-    P1.jumping = false;
-  }
 }
 function renderBackground(context){
-  context.drawImage(BACKGROUND.image,BACKGROUND.width / BACKGROUND.totalFrames * Math.floor(BACKGROUND.currentFrame/BACKGROUND.frameDuration),0,BACKGROUND.width / BACKGROUND.totalFrames, BACKGROUND.height,-GAME.canvas.width/2, -GAME.canvas.width/2, GAME.canvas.width, GAME.canvas.height);
+  context.drawImage(BACKGROUND.image,BACKGROUND.width / BACKGROUND.totalFrames * Math.floor(BACKGROUND.currentFrame/BACKGROUND.frameDuration),0,BACKGROUND.width / BACKGROUND.totalFrames, BACKGROUND.height,-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, GAME.canvas.height);
   if (BACKGROUND.currentFrame < BACKGROUND.totalFrames * BACKGROUND.frameDuration){
     BACKGROUND.currentFrame++;
   }
   else{
     BACKGROUND.currentFrame = 0;
   }
+  context.beginPath();
+  context.lineWidth = "1";
+  context.strokeStyle = "red";
+  context.rect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.rect(0, -GAME.canvas.height/2, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.rect(-GAME.canvas.width/2,0, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.rect(0,0, GAME.canvas.width/2, GAME.canvas.height/2);
+
+  context.stroke();
 }
 function initializePlatforms(){
   /*for (var i = 0; i < 5; i++){
     GAME.platforms.push(makePlatform(-GAME.canvas.width/2 + 100 * i, 450, 20, 10));
   }*/
-  GAME.platforms.push(makePlatform(0, GAME.canvas.height-5, GAME.canvas.width, 5));
-  GAME.platforms.push(makePlatform(50, 425, 20, 10));
+  GAME.platforms.push(makePlatform(-100, 300, 200, 5));
+
+  GAME.platforms.push(makePlatform(-50, 200, 100, 5));
+//  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }
 function renderPlatforms(context){
   for (var i = 0; i < GAME.platforms.length; i++){
-    context.fillRect(GAME.platforms[i].x- GAME.platforms[i].width/2, GAME.platforms[i].y- GAME.platforms[i].width/2, GAME.platforms[i].width, GAME.platforms[i].height);
+    context.fillRect(GAME.platforms[i].x-GAME.platforms[i].width/2, GAME.platforms[i].y-GAME.platforms[i].height/2, GAME.platforms[i].width, GAME.platforms[i].height);
   }
 }
 function runGame() {
@@ -132,8 +146,9 @@ function runGame() {
     context.save();
     context.rotate(Math.PI/2);
     renderPlayer(context);
-    context.fillText("x: " + P1.x + " y: " + P1.y, 0, 0);
-    context.fillText("Health: " + P1.health, 0, GAME.canvas.width/2-5);
+    /*context.fillText("x: " + P1.x + " y: " + P1.y + " hbx: " + P1.hitboxX + " h:" + P1.height, 0, 200);
+    context.fillText("x: " + GAME.platforms[0].x + " y: " + GAME.platforms[0].y + " w: " + GAME.platforms[0].width + " h: " + GAME.platforms[0].height, 0, 250);
+    context.fillText("Health: " + P1.health, 0, GAME.canvas.width/2-5);*/
     context.restore();
   }
   else{
