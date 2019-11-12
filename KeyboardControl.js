@@ -10,10 +10,6 @@ document.addEventListener('keydown', function(event) {
       break;
     case "w":
       P1.jumpPressed = true;
-      if (P1.canJump){
-        P1.yvel = 0;
-        P1.jumping = true;
-      }
       break;
     case "r":
       if (!GAME.started){

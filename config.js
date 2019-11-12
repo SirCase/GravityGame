@@ -22,7 +22,6 @@ var P1 = {
   directionL : false,
   directionR : false,
   renderDirection : "R",
-  canJump : false,
   currentFrame : 0,
   totalFrames : 69,
   runCutoff: 20,
@@ -35,7 +34,6 @@ var P1 = {
   imageR: null,
   health : 10,
   hitboxX : 30,
-  canMoveX : true
 };
 var BACKGROUND = {
   currentFrame : 0,
