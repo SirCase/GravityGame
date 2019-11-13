@@ -54,11 +54,10 @@ context.save();
   context.restore();
 }*/
 function checkCollisions(){
-  P1.xvel = 3; //Reset xvel in case it was set to 0
+  P1.xvel = 3; //Reset xvel in case it was set to 0 the previous time
   if (BACKGROUND.direction == 0){
     for (var i = 0; i < GAME.platforms.length; i++){
       var p = GAME.platforms[i];
-      var pushedDown = false;
       if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&
        (P1.x + P1.hitboxX/2 > p.x-p.width/2) &&
        (P1.y-P1.height/2 <= p.y+p.height/2) &&
@@ -77,15 +76,13 @@ function checkCollisions(){
            //if (P1.x-P1.hitboxX/2 > p.x-p.width/2 && P1.x+P1.hitboxX/2 < p.x+p.width/2){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
              P1.y = p.y+p.height/2 + P1.height/2;
              P1.yvel = 1;
-             pushedDown = true;
-           //}
          }
          else if (P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel){ //Collision with side of platform
-           if (P1.x < p.x && P1.directionR && !pushedDown){ //From left and moving right
+           if (P1.x < p.x && P1.directionR){ //From left and moving right
              P1.xvel = 0;
              P1.x = p.x - p.width/2 - P1.hitboxX/2;
            }
-           else if (P1.x > p.x && P1.directionL && !pushedDown){//From right and moving left
+           else if (P1.x > p.x && P1.directionL){//From right and moving left
              P1.xvel = 0;
              P1.x = p.x + p.width/2 + P1.hitboxX/2;
            }
@@ -157,9 +154,9 @@ function handlePlayerMovement() {
   }
 }
 function renderBackground(context){
-  //context.clearRect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, GAME.canvas.height);
+  context.clearRect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, GAME.canvas.height);
   context.drawImage(BACKGROUND.image,BACKGROUND.width / BACKGROUND.totalFrames * Math.floor(BACKGROUND.currentFrame/BACKGROUND.frameDuration),0,BACKGROUND.width / BACKGROUND.totalFrames, BACKGROUND.height,-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, GAME.canvas.height);
-  if (BACKGROUND.currentFrame < BACKGROUND.totalFrames * BACKGROUND.frameDuration){
+  if (BACKGROUND.currentFrame < BACKGROUND.totalFrames * BACKGROUND.frameDuration-1){
     BACKGROUND.currentFrame++;
   }
   else{
@@ -178,9 +175,9 @@ function initializePlatforms(){
   /*for (var i = 0; i < 5; i++){
     GAME.platforms.push(makePlatform(-GAME.canvas.width/2 + 100 * i, 450, 20, 10));
   }*/
-  GAME.platforms.push(makePlatform(-100, 300, 500, 5, "p"));
+  GAME.platforms.push(makePlatform(-100, 320, 500, 10, "p"));
   GAME.platforms.push(makePlatform(-100, 200, 100, 100, "p"));
-  GAME.platforms.push(makePlatform(-250, 250, 100, 5, "p"));
+  GAME.platforms.push(makePlatform(-260, 250, 100, 10, "p"));
 //  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }
 function renderPlatforms(context){
