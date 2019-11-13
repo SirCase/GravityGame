@@ -7,7 +7,13 @@ var GAME = {
   flippingGravity : false,
   started : true,
   level : 1,
-  platforms : []
+  platforms : [],
+  platformSprite : null,
+  lavaSprite : null,
+  spikeUSprite : null,
+  spikeDSprite : null,
+  spikeLSprite : null,
+  spikeRSprite : null
 };
 
 var P1 = {
@@ -34,6 +40,7 @@ var P1 = {
   imageR: null,
   health : 10,
   hitboxX : 30,
+  damageTimer : 0
 };
 var BACKGROUND = {
   currentFrame : 0,
@@ -44,12 +51,13 @@ var BACKGROUND = {
   direction : 0,
   image : null
 };
-function makePlatform(x, y, w, h){
+function makePlatform(x, y, w, h, type){
   var PLATFORM = {
     x : x,
     y : y,
     width : w,
-    height : h
+    height : h,
+    type : type
   }
   return PLATFORM;
 }

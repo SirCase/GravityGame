@@ -1,12 +1,16 @@
 document.addEventListener('keydown', function(event) {
   switch (event.key) {
     case "a":
-      P1.directionL = true;
-      P1.renderDirection = "L";
+      if (GAME.started){
+        P1.directionL = true;
+        P1.renderDirection = "L";
+      }
       break;
     case "d":
-      P1.directionR = true;
-      P1.renderDirection = "R";
+      if (GAME.started){
+        P1.directionR = true;
+        P1.renderDirection = "R";
+      }
       break;
     case "w":
       P1.jumpPressed = true;
@@ -25,6 +29,7 @@ document.addEventListener('keydown', function(event) {
         BACKGROUND.direction = 0;
       }
       P1.flippingGravity = true;
+      P1.yvel = 0;
       P1.y = -P1.y;
       P1.x = -P1.x;
       break;
