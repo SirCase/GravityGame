@@ -1,4 +1,3 @@
-
 function renderPlayer(context) {
   if (GAME.started){
     handlePlayerMovement();
@@ -9,7 +8,12 @@ function renderPlayer(context) {
     P1.renderDirection = "R";
   }
   if(P1.jumping){
-    P1.currentFrame = 20 * P1.frameDuration;
+    if (P1.directionR || P1.directionL){
+      P1.currentFrame = 20 * P1.frameDuration;
+    }
+    else{
+      P1.currentFrame = 0;
+    }
   }
   else if (P1.directionL || P1.directionR){
     if (P1.currentFrame < P1.totalFrames * P1.frameDuration  && P1.currentFrame >= P1.runCutoff * P1.frameDuration){
@@ -54,8 +58,9 @@ function checkCollisions(){
   if (BACKGROUND.direction == 0){
     for (var i = 0; i < GAME.platforms.length; i++){
       var p = GAME.platforms[i];
-      if ((P1.x - P1.hitboxX/2 <= p.x+p.width/2) &&
-       (P1.x + P1.hitboxX/2 >= p.x-p.width/2) &&
+      var pushedDown = false;
+      if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&
+       (P1.x + P1.hitboxX/2 > p.x-p.width/2) &&
        (P1.y-P1.height/2 <= p.y+p.height/2) &&
        (P1.y + P1.height/2 >= p.y-p.height/2)){
          if (p.type == "l"){
@@ -69,17 +74,18 @@ function checkCollisions(){
            P1.damageTimer = 60;
          }
          if (P1.y-P1.height/2 >= p.y + p.height/2+P1.yvel){ //Collision with bottom of platform
-           if (!(P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel)){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
+           //if (P1.x-P1.hitboxX/2 > p.x-p.width/2 && P1.x+P1.hitboxX/2 < p.x+p.width/2){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
              P1.y = p.y+p.height/2 + P1.height/2;
              P1.yvel = 1;
-           }
+             pushedDown = true;
+           //}
          }
          else if (P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel){ //Collision with side of platform
-           if (P1.x < p.x && P1.directionR){ //From left and moving right
+           if (P1.x < p.x && P1.directionR && !pushedDown){ //From left and moving right
              P1.xvel = 0;
              P1.x = p.x - p.width/2 - P1.hitboxX/2;
            }
-           else if (P1.x > p.x && P1.directionL){//From right and moving left
+           else if (P1.x > p.x && P1.directionL && !pushedDown){//From right and moving left
              P1.xvel = 0;
              P1.x = p.x + p.width/2 + P1.hitboxX/2;
            }
@@ -98,9 +104,10 @@ function checkCollisions(){
       }
     }
   }
+
 }
 function initializePlayer(){
-  P1.x = -100;
+  P1.x = 0;
   P1.y = 0;
   P1.xvel = 3;
   P1.xacc = 0;
@@ -111,6 +118,7 @@ function initializePlayer(){
   P1.renderDirection = "R";
   P1.health = 10;
   P1.canMoveX = true;
+  P1.damageTimer = 0;
 }
 function handlePlayerMovement() {
   if (P1.canMoveX){
@@ -124,7 +132,7 @@ function handlePlayerMovement() {
   P1.yacc = GAME.gravity;
   P1.yvel += P1.yacc;
   checkCollisions();
-  if (P1.damageTimer > 0){
+  if (P1.damageTimer > 0 && P1.health > 0){
     var canvas = document.getElementById('mainCanvas');
     var context = canvas.getContext('2d');
     P1.damageTimer--;
@@ -164,7 +172,6 @@ function renderBackground(context){
   context.rect(0, -GAME.canvas.height/2, GAME.canvas.width/2, GAME.canvas.height/2);
   context.rect(-GAME.canvas.width/2,0, GAME.canvas.width/2, GAME.canvas.height/2);
   context.rect(0,0, GAME.canvas.width/2, GAME.canvas.height/2);
-
   context.stroke();
 }
 function initializePlatforms(){
@@ -172,8 +179,8 @@ function initializePlatforms(){
     GAME.platforms.push(makePlatform(-GAME.canvas.width/2 + 100 * i, 450, 20, 10));
   }*/
   GAME.platforms.push(makePlatform(-100, 300, 500, 5, "p"));
-  GAME.platforms.push(makePlatform(-100, 230, 100, 50, "p"));
-  GAME.platforms.push(makePlatform(-150, 190, 200, 30, "sU"));
+  GAME.platforms.push(makePlatform(-100, 200, 100, 100, "p"));
+  GAME.platforms.push(makePlatform(-250, 250, 100, 5, "p"));
 //  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }
 function renderPlatforms(context){
