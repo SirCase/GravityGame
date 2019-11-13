@@ -70,7 +70,7 @@ function checkCollisions(){
        if (p.type == "l"){
          P1.health = 0;
        }
-       else if ((p.type == "sU" || p.type == "sD" || p.type == "sL" || p.type == "sR") && P1.damageTimer <= 0){
+       else if ((p.type == "sV" || p.type == "sH") && P1.damageTimer <= 0){
          P1.health -= 2;
          if (P1.health < 0){
            P1.health = 0;
@@ -176,17 +176,62 @@ function renderBackground(context){
   }
 }
 function initializePlatforms(){
-  if (GAME.level == 1){
+  if (GAME.level == 1){//Make all of the platforms for level 1
     DOOR.x = -200;
     DOOR.y = GAME.canvas.height/2-185-DOOR.height/2;
+    //DOOR.x = -100;//Skip ahead
+    //DOOR.y = 160;
+    //DOOR.x = -125;//Skip ahead 2
+    //DOOR.y = -83;
+    //DOOR.x = 33;//Skip ahead 3
+    //DOOR.y = -130;
     GAME.platforms.push(makePlatform(-GAME.canvas.width/2+180, 0, 10, GAME.canvas.height-360, "p"));//Left
     GAME.platforms.push(makePlatform(GAME.canvas.width/2-180, 0, 10, GAME.canvas.height-360, "p"));//Right
     GAME.platforms.push(makePlatform(0, -GAME.canvas.height/2+180, GAME.canvas.height-360, 10, "p"));//Top
     GAME.platforms.push(makePlatform(0, GAME.canvas.height/2-180, GAME.canvas.width-360, 10, "p"));//Bottom
-    GAME.platforms.push(makePlatform(-132,GAME.canvas.width/2-280, 300, 10, "p"));
-    GAME.platforms.push(makePlatform(0,GAME.canvas.width/2-190, 30, 10, "sU"));
+
+    GAME.platforms.push(makePlatform(-57,GAME.canvas.width/2-280, 450, 10, "p")); //First ceiling
+
+    GAME.platforms.push(makePlatform(-60,GAME.canvas.width/2-200, 120, 30, "sH"));//First spikes
+
+    GAME.platforms.push(makePlatform(110,210, 120, 30, "sH"));//Second spikes
+
+    GAME.platforms.push(makePlatform(163,166, 10, 30, "p")); //First wall
+    GAME.platforms.push(makePlatform(163,10, 10, 120, "p")); //Second wall
+
+    GAME.platforms.push(makePlatform(123,-70, 318, 40, "l")); //First Lava
+    GAME.platforms.push(makePlatform(223,-30, 30, 30, "p")); //First platform
+    GAME.platforms.push(makePlatform(100,135, 30, 30, "p")); //second platform
+    GAME.platforms.push(makePlatform(93,166, 130, 30, "l")); //second Lava
+
+
+    GAME.platforms.push(makePlatform(-30,38, 10, 175, "p")); //third wall
+    GAME.platforms.push(makePlatform(-10,10, 30, 120, "sV")); //Third spikes
+
+    GAME.platforms.push(makePlatform(-75,120, 80, 10, "p")); //second ceiling
+
+    GAME.platforms.push(makePlatform(-120,46, 10, 158, "p")); //fourth wall
+    GAME.platforms.push(makePlatform(-170,-20, 90, 20, "l")); //third Lava
+    GAME.platforms.push(makePlatform(-170,0, 20, 20, "p")); //third platform
+
+    GAME.platforms.push(makePlatform(-230,172, 105, 20, "l")); //fourth Lava
+    GAME.platforms.push(makePlatform(-272,-60, 20, 444, "l")); //fifth Lava
+    GAME.platforms.push(makePlatform(10,-272, 544, 20, "l")); //sixth Lava
+    GAME.platforms.push(makePlatform(-175,-252, 40, 20, "p")); //fourth platform
+
+    GAME.platforms.push(makePlatform(-117,-212, 30, 100, "l")); //seventh Lava
+    GAME.platforms.push(makePlatform(-125,-46, 30, 30, "p")); //fifth platform
+    GAME.platforms.push(makePlatform(-75,105, 70, 18, "sH")); //fourth spikes
+
+    GAME.platforms.push(makePlatform(-40,-250, 90, 20, "p")); //sixth platform
+    GAME.platforms.push(makePlatform(35, -100, 50, 15, "p")); //seventh platform
+
+    GAME.platforms.push(makePlatform(-16,-99, 40, 30, "l")); //eighth Lava
+    GAME.platforms.push(makePlatform(30,-227, 20, 70, "l")); //ninth Lava
+
+    GAME.platforms.push(makePlatform(120,-125, 20, 70, "l")); //tenth Lava
+    GAME.platforms.push(makePlatform(210, -100, 120, 15, "p")); //eighth platform
   }
-//  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }
 function renderPlatforms(context){
   for (var i = 0; i < GAME.platforms.length; i++){
@@ -195,41 +240,24 @@ function renderPlatforms(context){
     if (p.type == "l"){
       image = GAME.lavaSprite;
     }
-    else if (p.type == "sU"){
-      image = GAME.spikeUSprite;
-    }
-    else if (p.type == "sD"){
-      image = GAME.spikeDSprite;
-    }
-    else if (p.type == "sL"){
-      image = GAME.spikeLSprite;
-    }
-    else if (p.type == "sR"){
-      image = GAME.spikeRSprite;
+    else if (p.type == "sH" || p.type == "sV"){
+      image = GAME.spikeSprite;
     }
     else{
       image = GAME.platformSprite;
     }
-    if(p.type == "sU" || p.type == "sD" || p.type == "sL" || p.type == "sR"){
-      p.x-p.width/2, p.y-p.height/2, p.width, p.height
-      var startX = p.x-p.width/2;
-      var startY = p.y-p.height/2;
-      var number;
-      var remainder;
-      if (p.type == "sU" || p.type == "sD"){
-        number = Math.round(p.width/10);
-        remainder = p.width%10/number;
-        for (var i = 0; i < number; i++){
-          context.drawImage(image, startX + (10-remainder) * i, startY, 10-remainder, p.height);
-        }
-      }
-      else{
-        number = Math.round(p.height/10);
-        remainder = p.width%10/number;
-        for (var i = 0; i < number; i++){
-          context.drawImage(image, startX, startY + (10-remainder) * i, p.width, 10-remainder);
-        }
-      }
+    if (p.type == "sH"){
+      context.drawImage(image, p.x-p.width/2, p.y-p.height/2, p.width/4, p.height);
+      context.drawImage(image, p.x-p.width/2 + p.width/4, p.y-p.height/2, p.width/4, p.height);
+      context.drawImage(image, p.x-p.width/2 + 2* p.width/4, p.y-p.height/2, p.width/4, p.height);
+      context.drawImage(image, p.x-p.width/2 + 3* p.width/4, p.y-p.height/2, p.width/4, p.height);
+
+    }
+    else if (p.type == "sV"){
+      context.drawImage(image, p.x-p.width/2, p.y-p.height/2, p.width, p.height/4);
+      context.drawImage(image, p.x-p.width/2, p.y-p.height/2+ p.height/4, p.width, p.height/4);
+      context.drawImage(image, p.x-p.width/2, p.y-p.height/2+ 2* p.height/4, p.width, p.height/4);
+      context.drawImage(image, p.x-p.width/2, p.y-p.height/2+ 3* p.height/4, p.width, p.height/4);
 
     }
     else{
@@ -239,6 +267,8 @@ function renderPlatforms(context){
 }
 function renderDoor(context){
   context.drawImage(DOOR.image, DOOR.x-DOOR.width/2, DOOR.y-DOOR.height/2, DOOR.width, DOOR.height);
+  context.drawImage(DOOR.image, DOOR.exitX-DOOR.width/2, DOOR.exitY-DOOR.height/2, DOOR.width, DOOR.height);
+
 }
 function runGame() {
   var canvas = document.getElementById('mainCanvas'); //CALL THESE EVERY FRAME??????
@@ -260,7 +290,7 @@ function runGame() {
     //context.fillText("x: " + GAME.platforms[0].x + " y: " + GAME.platforms[0].y + " w: " + GAME.platforms[0].width + " h: " + GAME.platforms[0].height, 0, 250);
     var healthYPos = GAME.canvas.height/2 -5;
     if (P1.damageTimer > 0){
-      context.font = "80px Arial";
+      context.font = "" + (20+P1.damageTimer) +"px Arial";
       healthYPos = 25;
     }
     context.fillText("Health: " + P1.health, 0, healthYPos);
@@ -271,6 +301,7 @@ function runGame() {
     context.rotate(Math.PI/2+(BACKGROUND.direction * Math.PI/2));
     renderBackground(context);
     renderPlatforms(context);
+    renderDoor(context);
     context.restore();
     context.save();
     context.rotate(Math.PI/2);

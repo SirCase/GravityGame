@@ -25,14 +25,8 @@ function Start() {
   GAME.platformSprite.src = '/Sprites/platform.png';
   GAME.lavaSprite = new Image();
   GAME.lavaSprite.src = '/Sprites/lava.png';
-  GAME.spikeUSprite = new Image();
-  GAME.spikeUSprite.src = '/Sprites/spikeU.png';
-  GAME.spikeLSprite = new Image();
-  GAME.spikeLSprite.src = '/Sprites/spikeD.png';
-  GAME.spikeDSprite = new Image();
-  GAME.spikeDSprite.src = '/Sprites/spikeL.png';
-  GAME.spikeRSprite = new Image();
-  GAME.spikeRSprite.src = '/Sprites/spikeR.png';
+  GAME.spikeSprite = new Image();
+  GAME.spikeSprite.src = '/Sprites/spike.png';
   DOOR.image = new Image();
   DOOR.image.src = '/Sprites/door.png';
   window.requestAnimationFrame(runGame);

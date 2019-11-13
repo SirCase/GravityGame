@@ -10,10 +10,7 @@ var GAME = {
   platforms : [],
   platformSprite : null,
   lavaSprite : null,
-  spikeUSprite : null,
-  spikeDSprite : null,
-  spikeLSprite : null,
-  spikeRSprite : null,
+  spikeSprite : null,
   canFlip : true
 };
 
@@ -67,5 +64,7 @@ var DOOR = {
   y : 0,
   width : 45,
   height : 45,
-  image : null
+  image : null,
+  exitX : 210,
+  exitY : -130
 }
