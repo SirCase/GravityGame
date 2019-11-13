@@ -170,7 +170,7 @@ function initializePlatforms(){
     GAME.platforms.push(makePlatform(-GAME.canvas.width/2 + 100 * i, 450, 20, 10));
   }*/
   GAME.platforms.push(makePlatform(-100, 300, 500, 5, "p"));
-  GAME.platforms.push(makePlatform(-100, 270, 100, 5, "p"));
+  GAME.platforms.push(makePlatform(-100, 230, 100, 5, "p"));
   GAME.platforms.push(makePlatform(-150, 190, 195, 30, "sU"));
 //  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }

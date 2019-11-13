@@ -31,7 +31,7 @@ var P1 = {
   currentFrame : 0,
   totalFrames : 69,
   runCutoff: 20,
-  frameDuration : 5,
+  frameDuration : 4,
   sheetWidth : 5106,
   sheetHeight : 74,
   jumping : false,
