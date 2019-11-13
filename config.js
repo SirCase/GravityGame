@@ -13,7 +13,8 @@ var GAME = {
   spikeUSprite : null,
   spikeDSprite : null,
   spikeLSprite : null,
-  spikeRSprite : null
+  spikeRSprite : null,
+  canFlip : true
 };
 
 var P1 = {
@@ -40,7 +41,7 @@ var P1 = {
   imageR: null,
   health : 10,
   hitboxX : 30,
-  damageTimer : 0,
+  damageTimer : 0
 };
 var BACKGROUND = {
   currentFrame : 0,
@@ -60,4 +61,11 @@ function makePlatform(x, y, w, h, type){
     type : type
   }
   return PLATFORM;
+}
+var DOOR = {
+  x : 0,
+  y : 0,
+  width : 45,
+  height : 45,
+  image : null
 }
