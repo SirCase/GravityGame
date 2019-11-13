@@ -69,8 +69,10 @@ function checkCollisions(){
            P1.damageTimer = 60;
          }
          if (P1.y-P1.height/2 >= p.y + p.height/2+P1.yvel){ //Collision with bottom of platform
-           P1.y = p.y+p.height/2 + P1.height/2;
-           P1.yvel = 1;
+           if (!(P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel)){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
+             P1.y = p.y+p.height/2 + P1.height/2;
+             P1.yvel = 1;
+           }
          }
          else if (P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel){ //Collision with side of platform
            if (P1.x < p.x && P1.directionR){ //From left and moving right
@@ -170,8 +172,8 @@ function initializePlatforms(){
     GAME.platforms.push(makePlatform(-GAME.canvas.width/2 + 100 * i, 450, 20, 10));
   }*/
   GAME.platforms.push(makePlatform(-100, 300, 500, 5, "p"));
-  GAME.platforms.push(makePlatform(-100, 230, 100, 5, "p"));
-  GAME.platforms.push(makePlatform(-150, 190, 195, 30, "sU"));
+  GAME.platforms.push(makePlatform(-100, 230, 100, 50, "p"));
+  GAME.platforms.push(makePlatform(-150, 190, 200, 30, "sU"));
 //  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }
 function renderPlatforms(context){
