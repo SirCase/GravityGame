@@ -1,13 +1,13 @@
 function renderPlayer(context) {
   if (GAME.started){
     handlePlayerMovement();
-  if  (P1.directionL && P1.directionR){
+  if  (P1.directionL && P1.directionR){//Which way player is drawn
     P1.renderDirection = "L";
   }
   else if (P1.directionR && ! P1.directionL){
     P1.renderDirection = "R";
   }
-  if(P1.jumping){
+  if(P1.jumping){ //What frame of the animation of the sprite sheet to be on
     if (P1.directionR || P1.directionL){
       P1.currentFrame = 20 * P1.frameDuration;
     }
@@ -33,7 +33,7 @@ function renderPlayer(context) {
   }
 }
   //drawRotatedPlayer(context, p1, P1.sheetWidth / P1.totalFrames * Math.floor(P1.currentFrame/P1.frameDuration),0,P1.sheetWidth / P1.totalFrames, P1.sheetHeight, (P1.width/2), (P1.height/2), P1.width, P1.height, Math.PI/2+BACKGROUND.direction * Math.PI/2);
-  if (P1.renderDirection == "L"){
+  if (P1.renderDirection == "L"){//Draw player
     context.drawImage(P1.imageL, P1.sheetWidth / P1.totalFrames * Math.floor(P1.currentFrame/P1.frameDuration),0,P1.sheetWidth / P1.totalFrames, P1.sheetHeight, P1.x-(P1.width/2), P1.y-(P1.height/2), P1.width, P1.height);
   }
   else /*if (P1.renderDirection == "R")*/{
@@ -57,20 +57,18 @@ function checkCollisions(){
   P1.xvel = 3; //Reset xvel in case it was set to 0 the previous time
   for (var i = 0; i < GAME.platforms.length; i++){
     var p = GAME.platforms[i];
-    var multiplier = 1;
-    if (BACKGROUND.direction == 2){
+    if (BACKGROUND.direction == 2){//Rotate numbers if necessary for calculations
       p.x *=-1;
       p.y *=-1;
-      multiplier = -1;
     }
-    if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&
+    if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&//Did it collide at all
      (P1.x + P1.hitboxX/2 > p.x-p.width/2) &&
      (P1.y-P1.height/2 <= p.y+p.height/2) &&
      (P1.y + P1.height/2 >= p.y-p.height/2)){
-       if (p.type == "l"){
+       if (p.type == "l"){ //Lava instantly kills
          P1.health = 0;
        }
-       else if ((p.type == "sV" || p.type == "sH") && P1.damageTimer <= 0){
+       else if ((p.type == "sV" || p.type == "sH") && P1.damageTimer <= 0){ //Spikes make player take damage with cooldown
          P1.health -= 2;
          if (P1.health < 0){
            P1.health = 0;
@@ -109,13 +107,13 @@ function checkCollisions(){
          }
       }
     }
-    if (BACKGROUND.direction == 2){
+    if (BACKGROUND.direction == 2){//Undo rotated variables if necessary
       p.x *=-1;
       p.y *=-1;
     }
   }
 }
-function initializePlayer(){
+function initializePlayer(){ //Set initial values for player, called upon restarting game too
   P1.x = DOOR.x;
   P1.y = DOOR.y;
   P1.xvel = 3;
@@ -129,43 +127,35 @@ function initializePlayer(){
   P1.canMoveX = true;
   P1.damageTimer = 0;
 }
-function handlePlayerMovement() {
+function handlePlayerMovement() {//Called every frame, handles movement, gravity, calls collisions
   if (P1.canMoveX){
-    if (P1.directionL){
+    if (P1.directionL){//Move Left
       P1.x -= P1.xvel;
     }
-    else if (P1.directionR){
+    else if (P1.directionR){//Move right
       P1.x += P1.xvel;
     }
   }
-  P1.yacc = GAME.gravity;
+  P1.yacc = GAME.gravity;//Move under gravity
   P1.yvel += P1.yacc;
-  checkCollisions();
-  if (P1.damageTimer > 0 && P1.health > 0){
-    var canvas = document.getElementById('mainCanvas');
-    var context = canvas.getContext('2d');
+  checkCollisions();//Handle all enemy and platform collisions
+  if (P1.damageTimer > 0 && P1.health > 0){ //Make damage indicator
     P1.damageTimer--;
-    context.beginPath();
-    context.lineWidth = "1";
-    context.strokeStyle = "red";
-    context.fillRect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, P1.damageTimer);//Top
-    context.fillRect(-GAME.canvas.width/2, -GAME.canvas.height/2, P1.damageTimer, GAME.canvas.height);//Left
-    context.fillRect(-GAME.canvas.width/2, GAME.canvas.height/2-P1.damageTimer, GAME.canvas.width, P1.damageTimer);//Bottom
-    context.fillRect(GAME.canvas.width/2-P1.damageTimer, -GAME.canvas.height/2, P1.damageTimer, GAME.canvas.height);//Right
-    context.stroke();
+    GAME.context.beginPath();
+    GAME.context.lineWidth = "1";
+    GAME.context.strokeStyle = "red";
+    GAME.context.fillRect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, P1.damageTimer);//Top
+    GAME.context.fillRect(-GAME.canvas.width/2, -GAME.canvas.height/2, P1.damageTimer, GAME.canvas.height);//Left
+    GAME.context.fillRect(-GAME.canvas.width/2, GAME.canvas.height/2-P1.damageTimer, GAME.canvas.width, P1.damageTimer);//Bottom
+    GAME.context.fillRect(GAME.canvas.width/2-P1.damageTimer, -GAME.canvas.height/2, P1.damageTimer, GAME.canvas.height);//Right
+    GAME.context.stroke();
   }
   P1.y += P1.yvel;
-  if (P1.x > GAME.canvas.width/2 - P1.hitboxX/2){
-      P1.x = GAME.canvas.width/2 - P1.hitboxX/2;
-  }
-  if (P1.x - P1.hitboxX/2 <-GAME.canvas.width/2){
-    P1.x = -GAME.canvas.width/2 + P1.hitboxX/2;
-  }
   if (P1.health == 0){
     GAME.started = false;
   }
 }
-function renderBackground(context){
+function renderBackground(context){//Draws and updates frame of background animation
   context.clearRect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, GAME.canvas.height);
   context.drawImage(BACKGROUND.image,BACKGROUND.width / BACKGROUND.totalFrames * Math.floor(BACKGROUND.currentFrame/BACKGROUND.frameDuration),0,BACKGROUND.width / BACKGROUND.totalFrames, BACKGROUND.height,-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width, GAME.canvas.height);
   if (BACKGROUND.currentFrame < BACKGROUND.totalFrames * BACKGROUND.frameDuration-1){
@@ -175,7 +165,7 @@ function renderBackground(context){
     BACKGROUND.currentFrame = 0;
   }
 }
-function initializePlatforms(){
+function initializePlatforms(){ //Platforms have types, "p" is platform, "l" is lava, "sV" is vertical spikes, "sH" is horizontal spikes
   if (GAME.level == 1){//Make all of the platforms for level 1
     DOOR.x = -200;
     DOOR.y = GAME.canvas.height/2-185-DOOR.height/2;
@@ -234,7 +224,7 @@ function initializePlatforms(){
   }
 }
 function renderPlatforms(context){
-  for (var i = 0; i < GAME.platforms.length; i++){
+  for (var i = 0; i < GAME.platforms.length; i++){//Pick which sprite to draw
     var p = GAME.platforms[i];
     var image;
     if (p.type == "l"){
@@ -246,33 +236,32 @@ function renderPlatforms(context){
     else{
       image = GAME.platformSprite;
     }
-    if (p.type == "sH"){
+    if (p.type == "sH"){//If the platform is a spike, draw 4 of them
       context.drawImage(image, p.x-p.width/2, p.y-p.height/2, p.width/4, p.height);
       context.drawImage(image, p.x-p.width/2 + p.width/4, p.y-p.height/2, p.width/4, p.height);
       context.drawImage(image, p.x-p.width/2 + 2* p.width/4, p.y-p.height/2, p.width/4, p.height);
       context.drawImage(image, p.x-p.width/2 + 3* p.width/4, p.y-p.height/2, p.width/4, p.height);
 
     }
-    else if (p.type == "sV"){
+    else if (p.type == "sV"){//If the platform is a spike, draw 4 of them
       context.drawImage(image, p.x-p.width/2, p.y-p.height/2, p.width, p.height/4);
       context.drawImage(image, p.x-p.width/2, p.y-p.height/2+ p.height/4, p.width, p.height/4);
       context.drawImage(image, p.x-p.width/2, p.y-p.height/2+ 2* p.height/4, p.width, p.height/4);
       context.drawImage(image, p.x-p.width/2, p.y-p.height/2+ 3* p.height/4, p.width, p.height/4);
 
     }
-    else{
+    else{//Otherwise, just draw the platform
       context.drawImage(image, p.x-p.width/2, p.y-p.height/2, p.width, p.height);
     }
   }
 }
-function renderDoor(context){
+function renderDoor(context){//Draw starting and ending doors
   context.drawImage(DOOR.image, DOOR.x-DOOR.width/2, DOOR.y-DOOR.height/2, DOOR.width, DOOR.height);
   context.drawImage(DOOR.image, DOOR.exitX-DOOR.width/2, DOOR.exitY-DOOR.height/2, DOOR.width, DOOR.height);
 
 }
 function runGame() {
-  var canvas = document.getElementById('mainCanvas'); //CALL THESE EVERY FRAME??????
-  var context = canvas.getContext('2d');
+  var context = GAME.context
   if (GAME.started) {
     context.font = "30px Arial";
     context.fillStyle = "red";

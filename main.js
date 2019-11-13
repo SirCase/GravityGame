@@ -10,6 +10,7 @@ function Start() {
   initializePlayer();
   var canvas = document.getElementById('mainCanvas');
   var context = canvas.getContext('2d');
+  GAME.context = context;
   context.translate(GAME.canvas.width/2, GAME.canvas.height/2);
   context.rotate(-Math.PI/2-(BACKGROUND.direction * Math.PI/2));
   context.save();
