@@ -22,21 +22,16 @@ document.addEventListener('keydown', function(event) {
       }
       break;
     case " ":
-      if(!GAME.flippingGravity && BACKGROUND.direction == 0 && GAME.canFlip){
+      if(!GAME.flippingGravity && BACKGROUND.direction == 0){
           BACKGROUND.direction = 2;
-          P1.yvel *=0;
-          P1.y = -P1.y;
-          P1.x = -P1.x;
-          GAME.canFlip = false;
       }
-      else if (!GAME.flippingGravity && BACKGROUND.direction == 2 && GAME.canFlip){
+      else if (!GAME.flippingGravity){
         BACKGROUND.direction = 0;
-        P1.yvel *=0;
-        P1.y = -P1.y;
-        P1.x = -P1.x;
-        GAME.canFlip = false;
       }
-      GAME.flippingGravity = true;
+      P1.flippingGravity = true;
+      P1.yvel = 0;
+      P1.y = -P1.y;
+      P1.x = -P1.x;
       break;
     default:
       break;
@@ -55,7 +50,7 @@ document.addEventListener('keyup', function(event) {
       P1.directionR = false;
       break;
     case " ":
-      GAME.flippingGravity = false;
+      GAME.flippingGravitys = false;
       break;
     default:
       break;

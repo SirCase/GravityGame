@@ -38,12 +38,12 @@ function renderPlayer(context) {
   }
   else /*if (P1.renderDirection == "R")*/{
     context.drawImage(P1.imageR, P1.sheetWidth / P1.totalFrames * Math.floor(P1.currentFrame/P1.frameDuration),0,P1.sheetWidth / P1.totalFrames, P1.sheetHeight, P1.x-(P1.width/2), P1.y-(P1.height/2), P1.width, P1.height);
-  }/*
-  context.beginPath(); //Display player hitbox
+  }
+  context.beginPath();
   context.lineWidth = "1";
   context.strokeStyle = "red";
   context.rect(P1.x-P1.hitboxX/2, P1.y-P1.height/2, P1.hitboxX, P1.height);
-  context.stroke();*/
+  context.stroke();
 }
 /*
 function drawRotatedPlayer(context, image, sx, sy, dx, dy, x, y, width, height, angle) {
@@ -55,69 +55,57 @@ context.save();
 }*/
 function checkCollisions(){
   P1.xvel = 3; //Reset xvel in case it was set to 0 the previous time
-  for (var i = 0; i < GAME.platforms.length; i++){
-    var p = GAME.platforms[i];
-    var multiplier = 1;
-    if (BACKGROUND.direction == 2){
-      p.x *=-1;
-      p.y *=-1;
-      multiplier = -1;
-    }
-    if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&
-     (P1.x + P1.hitboxX/2 > p.x-p.width/2) &&
-     (P1.y-P1.height/2 <= p.y+p.height/2) &&
-     (P1.y + P1.height/2 >= p.y-p.height/2)){
-       if (p.type == "l"){
-         P1.health = 0;
-       }
-       else if ((p.type == "sU" || p.type == "sD" || p.type == "sL" || p.type == "sR") && P1.damageTimer <= 0){
-         P1.health -= 2;
-         if (P1.health < 0){
+  if (BACKGROUND.direction == 0){
+    for (var i = 0; i < GAME.platforms.length; i++){
+      var p = GAME.platforms[i];
+      if ((P1.x - P1.hitboxX/2 < p.x+p.width/2) &&
+       (P1.x + P1.hitboxX/2 > p.x-p.width/2) &&
+       (P1.y-P1.height/2 <= p.y+p.height/2) &&
+       (P1.y + P1.height/2 >= p.y-p.height/2)){
+         if (p.type == "l"){
            P1.health = 0;
          }
-       P1.damageTimer = 60;
-     }
-     if (P1.y-P1.height/2 >= p.y + p.height/2+P1.yvel){ //Collision with bottom of platform
-       //if (P1.x-P1.hitboxX/2 > p.x-p.width/2 && P1.x+P1.hitboxX/2 < p.x+p.width/2){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
-          P1.y = p.y+p.height/2 + P1.height/2;
-          P1.yvel = 1;
-     }
-     else if (P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel){ //Collision with side of platform
-       if (P1.x < p.x && P1.directionR){ //From left and moving right
-         P1.xvel = 0;
-         if (!GAME.flippingGravity){
-            P1.x = p.x - p.width/2 - P1.hitboxX/2;
-          }
-       }
-       else if (P1.x > p.x && P1.directionL){//From right and moving left
-         P1.xvel = 0;
-         if (!GAME.flippingGravity){
+         else if ((p.type == "sU" || p.type == "sD" || p.type == "L" || p.type == "sR") && P1.damageTimer <= 0){
+           P1.health -= 2;
+           if (P1.health < 0){
+             P1.health = 0;
+           }
+           P1.damageTimer = 60;
+         }
+         if (P1.y-P1.height/2 >= p.y + p.height/2+P1.yvel){ //Collision with bottom of platform
+           //if (P1.x-P1.hitboxX/2 > p.x-p.width/2 && P1.x+P1.hitboxX/2 < p.x+p.width/2){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
+             P1.y = p.y+p.height/2 + P1.height/2;
+             P1.yvel = 1;
+         }
+         else if (P1.y+P1.height/2 > p.y - p.height/2 + P1.yvel){ //Collision with side of platform
+           if (P1.x < p.x && P1.directionR){ //From left and moving right
+             P1.xvel = 0;
+             P1.x = p.x - p.width/2 - P1.hitboxX/2;
+           }
+           else if (P1.x > p.x && P1.directionL){//From right and moving left
+             P1.xvel = 0;
              P1.x = p.x + p.width/2 + P1.hitboxX/2;
+           }
          }
+         else{ //Collision with top of platform
+           if (P1.jumpPressed){ //Jump
+             P1.yvel = -P1.jumpStrength
+             P1.jumping = true;
+           }
+           else{ //Stand on platform
+             P1.yvel = 0;
+             P1.y = p.y-p.height/2 - P1.height/2;
+             P1.jumping = false;
+           }
         }
-       }
-       else{ //Collision with top of platform
-         GAME.canFlip = true;
-         if (P1.jumpPressed){ //Jump
-           P1.yvel = -P1.jumpStrength
-           P1.jumping = true;
-         }
-         else{ //Stand on platform
-           P1.yvel = 0;
-           P1.y = p.y-p.height/2 - P1.height/2;
-           P1.jumping = false;
-         }
       }
     }
-    if (BACKGROUND.direction == 2){
-      p.x *=-1;
-      p.y *=-1;
-    }
   }
+
 }
 function initializePlayer(){
-  P1.x = DOOR.x;
-  P1.y = DOOR.y;
+  P1.x = 0;
+  P1.y = 0;
   P1.xvel = 3;
   P1.xacc = 0;
   P1.yvel = 0;
@@ -174,18 +162,22 @@ function renderBackground(context){
   else{
     BACKGROUND.currentFrame = 0;
   }
+  context.beginPath();
+  context.lineWidth = "1";
+  context.strokeStyle = "red";
+  context.rect(-GAME.canvas.width/2, -GAME.canvas.height/2, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.rect(0, -GAME.canvas.height/2, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.rect(-GAME.canvas.width/2,0, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.rect(0,0, GAME.canvas.width/2, GAME.canvas.height/2);
+  context.stroke();
 }
 function initializePlatforms(){
-  if (GAME.level == 1){
-    DOOR.x = -200;
-    DOOR.y = GAME.canvas.height/2-185-DOOR.height/2;
-    GAME.platforms.push(makePlatform(-GAME.canvas.width/2+180, 0, 10, GAME.canvas.height-360, "p"));//Left
-    GAME.platforms.push(makePlatform(GAME.canvas.width/2-180, 0, 10, GAME.canvas.height-360, "p"));//Right
-    GAME.platforms.push(makePlatform(0, -GAME.canvas.height/2+180, GAME.canvas.height-360, 10, "p"));//Top
-    GAME.platforms.push(makePlatform(0, GAME.canvas.height/2-180, GAME.canvas.width-360, 10, "p"));//Bottom
-    GAME.platforms.push(makePlatform(-132,GAME.canvas.width/2-280, 300, 10, "p"));
-    GAME.platforms.push(makePlatform(0,GAME.canvas.width/2-190, 30, 10, "sU"));
-  }
+  /*for (var i = 0; i < 5; i++){
+    GAME.platforms.push(makePlatform(-GAME.canvas.width/2 + 100 * i, 450, 20, 10));
+  }*/
+  GAME.platforms.push(makePlatform(-100, 320, 500, 10, "p"));
+  GAME.platforms.push(makePlatform(-100, 200, 100, 100, "p"));
+  GAME.platforms.push(makePlatform(-260, 250, 100, 10, "p"));
 //  GAME.platforms.push(makePlatform(0, 425, 20, 10));
 }
 function renderPlatforms(context){
@@ -210,7 +202,7 @@ function renderPlatforms(context){
     else{
       image = GAME.platformSprite;
     }
-    if(p.type == "sU" || p.type == "sD" || p.type == "sL" || p.type == "sR"){
+    if(p.type == "sU" || p.type == "sD" || p.type == "L" || p.type == "sR"){
       p.x-p.width/2, p.y-p.height/2, p.width, p.height
       var startX = p.x-p.width/2;
       var startY = p.y-p.height/2;
@@ -237,9 +229,6 @@ function renderPlatforms(context){
     }
   }
 }
-function renderDoor(context){
-  context.drawImage(DOOR.image, DOOR.x-DOOR.width/2, DOOR.y-DOOR.height/2, DOOR.width, DOOR.height);
-}
 function runGame() {
   var canvas = document.getElementById('mainCanvas'); //CALL THESE EVERY FRAME??????
   var context = canvas.getContext('2d');
@@ -251,7 +240,6 @@ function runGame() {
     context.rotate(Math.PI/2+(BACKGROUND.direction * Math.PI/2));
     renderBackground(context);
     renderPlatforms(context);
-    renderDoor(context);
     context.restore();
     context.save();
     context.rotate(Math.PI/2);
