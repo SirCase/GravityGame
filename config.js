@@ -1,4 +1,5 @@
 var GAME = {
+  context : null,
   canvas : {
     width : 934,
     height : 934,
