@@ -12,7 +12,9 @@ var GAME = {
   platformSprite : null,
   lavaSprite : null,
   spikeSprite : null,
-  canFlip : true
+  canFlip : true,
+  d1 : 0,
+  d2 : 0
 };
 
 var P1 = {
@@ -41,6 +43,11 @@ var P1 = {
   hitboxX : 30,
   damageTimer : 0
 };
+var LAVA = {
+  currentFrame : 0,
+  totalFrames : 9,
+  frameDuration : 3,
+}
 var BACKGROUND = {
   currentFrame : 0,
   totalFrames : 30,
