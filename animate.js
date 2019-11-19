@@ -272,6 +272,22 @@ function initializePlatforms() { //Platforms have types, "p" is platform, "l" is
     GAME.platforms.push(makePlatform(0, -GAME.canvas.height / 2 + 180, GAME.canvas.height - 360, 10, "p")); //Top
     GAME.platforms.push(makePlatform(0, GAME.canvas.height / 2 - 180, GAME.canvas.width - 360, 10, "p")); //Bottom
 
+    GAME.platforms.push(makePlatform(-240, 175, 100, 30, "sH"));
+    GAME.platforms.push(makePlatform(-140, 175, 100, 30, "sH"));
+    GAME.platforms.push(makePlatform(-200, 260, 15, 60, "p"));
+    GAME.platforms.push(makePlatform(-120, 170, 15, 80, "p"));
+    GAME.platforms.push(makePlatform(-30, 250, 30, 80, "l"));
+    GAME.platforms.push(makePlatform(-40, 75, 15, 475, "p"));
+
+    GAME.platforms.push(makePlatform(-240, 155, 80, 15, "p"));
+    GAME.platforms.push(makePlatform(-200, -45, 15, 250, "p"));
+    GAME.platforms.push(makePlatform(-275, 40, 35, 15, "p"));
+    GAME.platforms.push(makePlatform(-200, -50, 20, 80, "sV"));
+    GAME.platforms.push(makePlatform(-200, -50, 70, 20, "p"));
+
+    GAME.platforms.push(makePlatform(-90, -170, 230, 10, "l"));
+    GAME.platforms.push(makePlatform(0, -190, 50, 20, "p"));
+    GAME.platforms.push(makePlatform(150, -190, 30, 200, "sV"))
   }
 }
 

@@ -7,7 +7,7 @@ var GAME = {
   gravity : 0.5,
   flippingGravity : false,
   started : true,
-  level : 1,
+  level : 2,
   platforms : [],
   platformSprite : null,
   lavaSprite : null,
