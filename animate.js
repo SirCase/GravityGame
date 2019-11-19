@@ -57,8 +57,8 @@ function checkCollisions() {
     } else if (BACKGROUND.direction == 1) { //Right gravity
       var temp;
       var temp2;
-      temp = -p.x;
-      p.x = p.y;
+      temp = p.x;
+      p.x = -p.y;
       p.y = temp;
       temp2 = p.width;
       p.width = p.height;
@@ -66,8 +66,8 @@ function checkCollisions() {
     } else if (BACKGROUND.direction == 3) { //Left gravity
       var temp;
       var temp2;
-      temp = -p.y;
-      p.y = p.x;
+      temp = p.y;
+      p.y = -p.x;
       p.x = temp;
       temp2 = p.height;
       p.height = p.width;
@@ -123,8 +123,8 @@ function checkCollisions() {
     if (BACKGROUND.direction == 1) { //Undo rotated variables if necessary
       var temp
       var temp2
-      temp = -p.y;
-      p.y = p.x;
+      temp = p.y;
+      p.y = -p.x;
       p.x = temp;
       temp2 = p.width;
       p.width = p.height;
@@ -133,8 +133,8 @@ function checkCollisions() {
     if (BACKGROUND.direction == 3) { //Undo rotated variables if necessary
       var temp
       var temp2
-      temp = -p.x;
-      p.x = p.y;
+      temp = p.x;
+      p.x = -p.y;
       p.y = temp;
       temp2 = p.height;
       p.height = p.width;
@@ -274,7 +274,7 @@ function initializePlatforms() { //Platforms have types, "p" is platform, "l" is
     GAME.platforms.push(makePlatform(0, GAME.canvas.height / 2 - 180, GAME.canvas.width - 360, 10, "p")); //Bottom
 
     GAME.platforms.push(makePlatform(-240, 175, 100, 30, "sH"));
-    GAME.platforms.push(makePlatform(-140, 175, 100, 30, "sH"));
+    GAME.platforms.push(makePlatform(-140, 175, 75, 30, "sH"));
     GAME.platforms.push(makePlatform(-200, 260, 15, 60, "p"));
     GAME.platforms.push(makePlatform(-120, 170, 15, 80, "p"));
     GAME.platforms.push(makePlatform(-40, 250, 20, 80, "l"));
@@ -283,11 +283,11 @@ function initializePlatforms() { //Platforms have types, "p" is platform, "l" is
     GAME.platforms.push(makePlatform(-240, 155, 80, 15, "p"));
     GAME.platforms.push(makePlatform(-200, -45, 15, 250, "p"));
     GAME.platforms.push(makePlatform(-275, 40, 35, 15, "p"));
-    GAME.platforms.push(makePlatform(-200, -50, 20, 80, "sV"));
+    GAME.platforms.push(makePlatform(-200, -50, 30, 80, "sV"));
     GAME.platforms.push(makePlatform(-200, -50, 70, 20, "p"));
 
-    GAME.platforms.push(makePlatform(-90, -170, 230, 10, "l"));
-    GAME.platforms.push(makePlatform(0, -190, 50, 20, "p"));
+    GAME.platforms.push(makePlatform(-70, -170, 270, 10, "l"));
+    GAME.platforms.push(makePlatform(0, -190, 50, 40, "p"));
     GAME.platforms.push(makePlatform(150, -190, 30, 200, "sV"));
     GAME.platforms.push(makePlatform(150, 10, 30, 200, "sV"));
 
@@ -308,7 +308,7 @@ function renderPlatforms(context) {
   for (var i = 0; i < GAME.platforms.length; i++) { //Pick which sprite to draw
     var p = GAME.platforms[i];
     var image;
-    if (p.type == "lH" || p.type=="lV") {
+    if (p.type == "lH" || p.type=="lV" || p.type == "l") {
       image = GAME.lavaSprite;
     } else if (p.type == "sH" || p.type == "sV") {
       image = GAME.spikeSprite;
