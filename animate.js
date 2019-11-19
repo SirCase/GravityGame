@@ -267,6 +267,7 @@ function initializePlatforms() { //Platforms have types, "p" is platform, "l" is
   if (GAME.level == 2) {
     GAME.d1 = 0;
     GAME.d2 = 1;
+    DOOR.x = -250;
     GAME.platforms.push(makePlatform(-GAME.canvas.width / 2 + 180, 0, 10, GAME.canvas.height - 360, "p")); //Left
     GAME.platforms.push(makePlatform(GAME.canvas.width / 2 - 180, 0, 10, GAME.canvas.height - 360, "p")); //Right
     GAME.platforms.push(makePlatform(0, -GAME.canvas.height / 2 + 180, GAME.canvas.height - 360, 10, "p")); //Top
@@ -276,7 +277,7 @@ function initializePlatforms() { //Platforms have types, "p" is platform, "l" is
     GAME.platforms.push(makePlatform(-140, 175, 100, 30, "sH"));
     GAME.platforms.push(makePlatform(-200, 260, 15, 60, "p"));
     GAME.platforms.push(makePlatform(-120, 170, 15, 80, "p"));
-    GAME.platforms.push(makePlatform(-30, 250, 30, 80, "l"));
+    GAME.platforms.push(makePlatform(-40, 250, 20, 80, "l"));
     GAME.platforms.push(makePlatform(-40, 75, 15, 475, "p"));
 
     GAME.platforms.push(makePlatform(-240, 155, 80, 15, "p"));
@@ -287,7 +288,19 @@ function initializePlatforms() { //Platforms have types, "p" is platform, "l" is
 
     GAME.platforms.push(makePlatform(-90, -170, 230, 10, "l"));
     GAME.platforms.push(makePlatform(0, -190, 50, 20, "p"));
-    GAME.platforms.push(makePlatform(150, -190, 30, 200, "sV"))
+    GAME.platforms.push(makePlatform(150, -190, 30, 200, "sV"));
+    GAME.platforms.push(makePlatform(150, 10, 30, 200, "sV"));
+
+    GAME.platforms.push(makePlatform(120, -100, 60, 10, "l"));
+    GAME.platforms.push(makePlatform(135, -130, 10, 60, "p"));
+    GAME.platforms.push(makePlatform(0, -50, 90, 50, "p"));
+    GAME.platforms.push(makePlatform(100, 30, 90, 10));
+    GAME.platforms.push(makePlatform(130, 0, 10, 50));
+    GAME.platforms.push(makePlatform(130, 70, 10, 70, "l"));
+    GAME.platforms.push(makePlatform(0, 90, 90, 10, "l"));
+
+    GAME.platforms.push(makePlatform(90, 150, 250, 10));
+
   }
 }
 

@@ -1,6 +1,12 @@
 document.addEventListener('keydown', function(event) {
 
   switch (event.key) {
+    case "1":
+      if (GAME.started) {
+        GAME.platforms=[];
+        GAME.level = 1;
+        initializePlatforms();
+      }
     case "2":
       if (GAME.started) {
         GAME.platforms=[];
