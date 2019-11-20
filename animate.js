@@ -32,12 +32,13 @@ function renderPlayer(context) {
   } else /*if (P1.renderDirection == "R")*/ {
     context.drawImage(P1.imageR, P1.sheetWidth / P1.totalFrames * Math.floor(P1.currentFrame / P1.frameDuration), 0, P1.sheetWidth / P1.totalFrames, P1.sheetHeight, P1.x - (P1.width / 2), P1.y - (P1.height / 2), P1.width, P1.height);
   }
-
-  context.beginPath(); //Display player hitbox
-  context.lineWidth = "1";
-  context.strokeStyle = "red";
-  context.rect(P1.x - P1.hitboxX / 2, P1.y - P1.height / 2, P1.hitboxX, P1.height);
-  context.stroke();
+  if (P1.hitboxMode){
+    context.beginPath(); //Display player hitbox
+    context.lineWidth = "1";
+    context.strokeStyle = "red";
+    context.rect(P1.x - P1.hitboxX / 2, P1.y - P1.height / 2, P1.hitboxX, P1.height);
+    context.stroke();
+  }
 }
 /*
 function drawRotatedPlayer(context, image, sx, sy, dx, dy, x, y, width, height, angle) {

@@ -50,11 +50,13 @@ document.addEventListener('keydown', function(event) {
             var temp = P1.x;
             P1.x = -P1.y;
             P1.y= temp;
+            P1.y -=Math.ceil(P1.height-P1.hitboxX)/2;
           }
           else if (GAME.d2 == 3){
             var temp = P1.y;
             P1.y = -P1.x;
             P1.x = temp;
+            P1.y -=Math.ceil(P1.height-P1.hitboxX)/2;
           }
           GAME.canFlip = false;
         } else if (!GAME.flippingGravity && BACKGROUND.direction == GAME.d2 && GAME.canFlip && GAME.started) {
@@ -67,15 +69,23 @@ document.addEventListener('keydown', function(event) {
             var temp = P1.y;
             P1.y = -P1.x;
             P1.x = temp;
+            P1.y -=Math.ceil(P1.height-P1.hitboxX)/2;
           }
           else if (GAME.d2 == 3){
             var temp = P1.x;
             P1.x = -P1.y;
             P1.y = temp;
+            P1.y -=Math.ceil(P1.height-P1.hitboxX)/2;
           }
           GAME.canFlip = false;
         }
         GAME.flippingGravity = true;
+        break;
+      case "h":
+        if(!P1.pressingHitbox){
+          P1.hitboxMode = !P1.hitboxMode;
+          P1.pressingHitbox = true;
+        }
         break;
       default:
         break;
@@ -95,6 +105,10 @@ document.addEventListener('keyup', function(event) {
       break;
     case " ":
       GAME.flippingGravity = false;
+      break;
+    case "h":
+        P1.pressingHitbox = false;
+      }
       break;
     default:
       break;

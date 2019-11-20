@@ -41,7 +41,9 @@ var P1 = {
   imageR: null,
   health : 10,
   hitboxX : 30,
-  damageTimer : 0
+  damageTimer : 0,
+  hitboxMode : false,
+  pressingHitbox : false
 };
 var LAVA = {
   currentFrame : 0,
