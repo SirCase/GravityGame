@@ -108,7 +108,6 @@ document.addEventListener('keyup', function(event) {
       break;
     case "h":
         P1.pressingHitbox = false;
-      }
       break;
     default:
       break;
