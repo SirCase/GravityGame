@@ -337,6 +337,13 @@ function renderPlatforms(context) {
     } else { //Otherwise, just draw the platform
       context.drawImage(image, p.x - p.width / 2, p.y - p.height / 2, p.width, p.height);
     }
+    if (GAME.hitboxMode){
+      context.beginPath(); //Display player hitbox
+      context.lineWidth = "1";
+      context.strokeStyle = "red";
+      context.rect(p.x - p.width / 2, p.y - p.height / 2,p.width, p.height);
+      context.stroke();
+    }
   }
 }
 
