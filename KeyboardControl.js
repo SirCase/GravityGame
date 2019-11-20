@@ -82,9 +82,9 @@ document.addEventListener('keydown', function(event) {
         GAME.flippingGravity = true;
         break;
       case "h":
-        if(!P1.pressingHitbox){
-          P1.hitboxMode = !P1.hitboxMode;
-          P1.pressingHitbox = true;
+        if(!GAME.pressingHitbox){
+          GAME.hitboxMode = !GAME.hitboxMode;
+          GAME.pressingHitbox = true;
         }
         break;
       default:
@@ -107,7 +107,7 @@ document.addEventListener('keyup', function(event) {
       GAME.flippingGravity = false;
       break;
     case "h":
-        P1.pressingHitbox = false;
+        GAME.pressingHitbox = false;
       break;
     default:
       break;

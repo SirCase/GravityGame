@@ -14,7 +14,9 @@ var GAME = {
   spikeSprite : null,
   canFlip : true,
   d1 : 0,
-  d2 : 0
+  d2 : 0,
+  hitboxMode : false,
+  pressingHitbox : false
 };
 
 var P1 = {
@@ -41,9 +43,7 @@ var P1 = {
   imageR: null,
   health : 10,
   hitboxX : 30,
-  damageTimer : 0,
-  hitboxMode : false,
-  pressingHitbox : false
+  damageTimer : 0
 };
 var LAVA = {
   currentFrame : 0,
