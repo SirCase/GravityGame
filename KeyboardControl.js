@@ -9,9 +9,12 @@ document.addEventListener('keydown', function(event) {
       }
       case "2":
         if (GAME.started) {
+          BACKGROUND.direction = 0;
           GAME.platforms = [];
           GAME.level = 2;
           initializePlatforms();
+          P1.x = DOOR.x;
+          P1.y = DOOR.y;
         }
         break;
       case "a":
