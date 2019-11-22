@@ -16,7 +16,9 @@ var GAME = {
   d1 : 0,
   d2 : 0,
   hitboxMode : false,
-  pressingHitbox : false
+  pressingHitbox : false,
+  damageSound : null,
+  deathSound : null
 };
 
 var P1 = {

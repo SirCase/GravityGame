@@ -198,7 +198,7 @@ function renderBackground(context) { //Draws and updates frame of background ani
   }
 }
 
-function renderLava(context) { //Draws and updates frame of background animation
+function renderLava(context) { //updates frame of lava animation
   if (LAVA.currentFrame < LAVA.totalFrames * LAVA.frameDuration - 1) {
     LAVA.currentFrame++;
   } else {
@@ -321,13 +321,14 @@ function renderPlatforms(context) {
       context.drawImage(image, p.x - p.width / 2 + p.width / 4, p.y - p.height / 2, p.width / 4, p.height);
       context.drawImage(image, p.x - p.width / 2 + 2 * p.width / 4, p.y - p.height / 2, p.width / 4, p.height);
       context.drawImage(image, p.x - p.width / 2 + 3 * p.width / 4, p.y - p.height / 2, p.width / 4, p.height);
-    } else if (p.type == "lH") {
-      var number = Math.floor(p.width / 20);
-      var remainder = (p.width % 20) / number;
-      for (var i = 0; i < number; i++) {
-        context.drawImage(image, p.width / LAVA.totalFrames * Math.floor(LAVA.currentFrame / LAVA.frameDuration), 0, p.width / LAVA.totalFrames, p.height, p.x - p.width / 2, p.y - p.height / 2, 20 + remainder, p.height);
+    //} //else if (p.type == "lH") {
+      //var number = 5;//Math.floor(p.width / 20);
+      //var remainder = (p.width % 20) / number;
+    /*for (var i = 0; i < 5; i++) {
+        context.drawImage(image, p.width / LAVA.totalFrames * Math.floor(LAVA.currentFrame / LAVA.frameDuration), 0, p.width / LAVA.totalFrames, p.height, p.x - p.width / 2, p.y - p.height / 2, 20 /* + remainder, p.height);
+        */
 
-      }
+    //}
     } else if (p.type == "sV") { //If the platform is a spike, draw 4 of them
       context.drawImage(image, p.x - p.width / 2, p.y - p.height / 2, p.width, p.height / 4);
       context.drawImage(image, p.x - p.width / 2, p.y - p.height / 2 + p.height / 4, p.width, p.height / 4);
@@ -345,6 +346,7 @@ function renderPlatforms(context) {
       context.stroke();
     }
   }
+
 }
 
 function renderDoor(context) { //Draw starting and ending doors
