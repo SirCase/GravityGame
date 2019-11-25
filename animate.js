@@ -55,6 +55,8 @@ function checkCollisions() {
     if (BACKGROUND.direction == 2) { //Rotate numbers if necessary for calculations
       p.x *= -1;
       p.y *= -1;
+      DOOR.exitX *= -1;
+      DOOR.exitY *= -1;
     } else if (BACKGROUND.direction == 1) { //Right gravity
       var temp;
       var temp2;
@@ -64,6 +66,14 @@ function checkCollisions() {
       temp2 = p.width;
       p.width = p.height;
       p.height = temp2;
+      var temp3;
+      var temp4;
+      temp3 = DOOR.exitX;
+      DOOR.exitX = -DOOR.exitY;
+      DOOR.exitY = temp3;
+      temp4 = DOOR.width;
+      DOOR.width = DOOR.height;
+      DOOR.height = temp4;
     } else if (BACKGROUND.direction == 3) { //Left gravity
       var temp;
       var temp2;
@@ -73,6 +83,14 @@ function checkCollisions() {
       temp2 = p.height;
       p.height = p.width;
       p.width = temp2;
+      var tem3;
+      var temp4;
+      temp3 = DOOR.exitY;
+      DOOR.exitY = -DOOR.exitX;
+      DOOR.exitX = temp3;
+      temp4 = DOOR.height;
+      DOOR.height = DOOR.width;
+      DOOR.width = temp4;
     }
 
     if ((P1.x - P1.hitboxX / 2 < p.x + p.width / 2) && //Did it collide at all
@@ -134,27 +152,45 @@ function checkCollisions() {
     if (BACKGROUND.direction == 2) { //Undo rotated variables if necessary
       p.x *= -1;
       p.y *= -1;
+      DOOR.exitX *= -1;
+      DOOR.exitY *= -1;
     }
 
     if (BACKGROUND.direction == 1) { //Undo rotated variables if necessary
-      var temp
-      var temp2
+      var temp;
+      var temp2;
       temp = p.y;
       p.y = -p.x;
       p.x = temp;
       temp2 = p.width;
       p.width = p.height;
       p.height = temp2;
+      var temp3;
+      var temp4;
+      temp3 = DOOR.exitY;
+      DOOR.exitY = -DOOR.exitX;
+      DOOR.exitX = temp3;
+      temp4 = DOOR.width;
+      DOOR.width = DOOR.height;
+      DOOR.height = temp4;
     }
     if (BACKGROUND.direction == 3) { //Undo rotated variables if necessary
-      var temp
-      var temp2
+      var temp;
+      var temp2;
       temp = p.x;
       p.x = -p.y;
       p.y = temp;
       temp2 = p.height;
       p.height = p.width;
       p.width = temp2;
+      var temp3;
+      var temp4;
+      temp3 = DOOR.exitX;
+      DOOR.exitX = -DOOR.exitY;
+      DOOR.exitY = temp3;
+      temp4 = DOOR.height;
+      DOOR.height = DOOR.width;
+      DOOR.width = temp4;
     }
 
   }
