@@ -87,6 +87,10 @@ function checkCollisions() {
           P1.health = 0;
         }
         P1.damageTimer = 60;
+        if (P1.health > 0){
+
+          GAME.damageSound.play();
+        }
       }
       if (P1.y - P1.height / 2 >= p.y + p.height / 2 + P1.yvel) { //Collision with bottom of platform
         //if (P1.x-P1.hitboxX/2 > p.x-p.width/2 && P1.x+P1.hitboxX/2 < p.x+p.width/2){ //Prevents clipping through floor in case of collisions with multiple platforms at the same time
@@ -116,6 +120,17 @@ function checkCollisions() {
         }
       }
     }
+    if ((P1.x - P1.hitboxX / 2 < DOOR.exitX + DOOR.width / 2) && //go to next level
+      (P1.x + P1.hitboxX / 2 > DOOR.exitX - DOOR.width / 2) &&
+      (P1.y - P1.height / 2 <= DOOR.exitY + DOOR.height / 2) &&
+      (P1.y + P1.height / 2 >= DOOR.exitY - DOOR.height / 2)) {
+        BACKGROUND.direction = 0;
+        GAME.platforms = [];
+        GAME.level++;
+        initializePlatforms();
+        P1.x = DOOR.x;
+        P1.y = DOOR.y;
+      }
     if (BACKGROUND.direction == 2) { //Undo rotated variables if necessary
       p.x *= -1;
       p.y *= -1;
@@ -185,6 +200,7 @@ function handlePlayerMovement() { //Called every frame, handles movement, gravit
   P1.y += P1.yvel;
   if (P1.health == 0) {
     GAME.started = false;
+    GAME.deathSound.play();
   }
 }
 

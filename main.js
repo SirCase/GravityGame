@@ -45,6 +45,6 @@ function Start() {
     }
   }
   GAME.damageSound = new sound('/Sounds/damageSound.mp3')
-  GAME.damageSound = new sound('/Sounds/damageSound.mp3')
+  GAME.deathSound = new sound('/Sounds/deathSound.mp3')
   window.requestAnimationFrame(runGame);
 }
