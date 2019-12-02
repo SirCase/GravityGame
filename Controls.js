@@ -1,3 +1,14 @@
+
+/*CONTROLS
+A - Move Left
+D - Move Right
+W - Jump
+SPACE - Flip Gravity
+
+DEVELOPER TOOLS
+H - Toggle Hitbox Mode
+2 - Skip To Level 2
+*/
 document.addEventListener('keydown', function(event) {
 
   switch (event.key) {
